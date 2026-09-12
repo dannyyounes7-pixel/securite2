@@ -121,7 +121,7 @@ Ne jamais interpoler des données utilisateur dans une requête SQL. Implémente
 ### V3 — Reflected XSS dans /search
 
 #### Mécanisme
-Le paramètre `q` est injecté directement dans le formulaire HTML de la page de recherche, sans échappement ni mise en forme sécurisée. Cette vulnérabilité correspond à OWASP A07 : Cross-Site Scripting.
+Le paramètre `q` est injecté directement dans le formulaire HTML de la page de recherche, sans échappement ni mise en forme sécurisée. Cette vulnérabilité correspond à OWASP A03 : Injection (XSS étant classé sous Injection depuis OWASP 2021).
 
 #### Exploitation
 Payload : `<script>alert('XSS')</script>`
@@ -149,7 +149,7 @@ Utiliser le moteur de templates Flask avec échappement HTML automatique, par ex
 ### V4 — Stored XSS dans /comments
 
 #### Mécanisme
-Le commentaire est enregistré tel quel en base sans sanitization et réinjecté dans la page /comments. L'attaque est durable et visible pour tous les utilisateurs qui chargent la page. Elle relève également de OWASP A07 : XSS.
+Le commentaire est enregistré tel quel en base sans sanitization et réinjecté dans la page /comments. L'attaque est durable et visible pour tous les utilisateurs qui chargent la page. Elle relève également d'OWASP A03 : Injection, comme tout XSS selon la classification OWASP 2021.
 
 #### Exploitation
 Payload : `<img src=x onerror="alert(document.cookie)">`
@@ -458,14 +458,11 @@ Les scores ci-dessous sont basés sur la reproduction réelle du système local 
 
 ### Matrice 9-box
 
-```
-Impact
-Élevé   |   V1   V2   Bonus  |   V4   V5   V7   |   V8   V9   V10
-Moyen   |   V3   V11         |   V6             |                 
-Faible  |                    |                 |                 
-        Faible          Moyen             Élevé
-                Probabilité
-```
+| Impact \ Probabilité | Faible | Moyen | Élevé |
+|---|---|---|---|
+| **Élevé** | — | V3 | V1, V2, V4, V5, V7, V8, V9, V10, Bonus |
+| **Moyen** | — | V6, V11 | — |
+| **Faible** | — | — | — |
 
 Les vulnérabilités les plus critiques sont V1, V2, Bonus, V4, V5, V7, V8, V9 et V10. Elles se situent dans la zone élevée à très élevée, car elles combinent à la fois un impact de niveau système et une probabilité forte de réussite dans l'environnement réel.
 
