@@ -1,0 +1,25 @@
+# ============================================================================
+# TP Réel Chapitre 2 - docker-compose.yml (v2)
+# Lancement: docker-compose up -d --build
+# Arrêt:     docker-compose down
+# Logs:      docker-compose logs -f
+# ============================================================================
+services:
+  datacorp-vulnerable-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: tp-reel-ch2/datacorp-analytics:v2
+    container_name: datacorp-analytics-tp
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    environment:
+      - FLASK_ENV=development
+    # Réseau isolé dédié au TP : n'expose que le port 5000 en local
+    networks:
+      - tp-ch2-net
+
+networks:
+  tp-ch2-net:
+    driver: bridge

